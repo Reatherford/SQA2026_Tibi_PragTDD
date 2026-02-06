@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<IClient>(_ => {
-    string apiKey = builder.Configuration["OpenWeather:Key"];
+    string apiKey = builder.Configuration["OpenWeather:Key"]
+        ?? throw new InvalidOperationException("Missing configuration value: OpenWeather:Key");
     HttpClient httpClient = new HttpClient();
     return new Client(apiKey, httpClient);
 });

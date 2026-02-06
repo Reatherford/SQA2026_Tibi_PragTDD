@@ -36,7 +36,8 @@ public class WeatherForecastController : ControllerBase
     {
         const decimal GREENWICH_LAT = 51.4810m;
         const decimal GREENWICH_LON = 0.0052m;
-        string apiKey = _config["OpenWeather:Key"];
+        string apiKey = _config["OpenWeather:Key"]
+            ?? throw new InvalidOperationException("Missing configuration value: OpenWeather:Key");
         HttpClient httpClient = new HttpClient();
         Client openWeatherClient = new Client(apiKey, httpClient);
         OneCallResponse res = await openWeatherClient.OneCallAsync
